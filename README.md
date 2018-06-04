@@ -16,4 +16,10 @@ Modifications (explained in commits):
 - ofxTLTrackHeader.cpp
 - ofOpenALSoundPlayer_TimelineAdditions.h
 
+IMPORTANT!!
+Also modify in Openframeworks/graphics/ofImage.h :
 
+    template<typename SrcType> 
+    void clone(const ofImage_<SrcType> &mom); 
+
+Change these two lines from protected to public!
