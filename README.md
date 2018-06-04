@@ -16,10 +16,18 @@ Modifications (explained in commits):
 - ofxTLTrackHeader.cpp
 - ofOpenALSoundPlayer_TimelineAdditions.h
 
-IMPORTANT!!
-Also modify in Openframeworks/graphics/ofImage.h :
+External modifications:
 
-    template<typename SrcType> 
-    void clone(const ofImage_<SrcType> &mom); 
+- modify in Openframeworks/graphics/ofImage.h :
 
-Change these two lines from protected to public!
+      template<typename SrcType> 
+      void clone(const ofImage_<SrcType> &mom); 
+
+  Change these two lines from protected to public!
+
+- modify ofxTextInputField.h from ofxTextInputField addon:
+    
+        bool    isEditing; 
+        bool     isEnabled; 
+          
+  Change these two lines from protected to public!
