@@ -3,7 +3,7 @@
 #include "ofConstants.h"
 
 #include "ofMain.h"
-#include "ofBaseSoundPlayer.h"
+//#include "ofBaseSoundPlayer.h"
 #include "ofEvents.h"
 #include "ofThread.h"
 
@@ -73,7 +73,9 @@ class ofOpenALSoundPlayer_TimelineAdditions : public ofBaseSoundPlayer, public o
 		ofOpenALSoundPlayer_TimelineAdditions();
 		virtual ~ofOpenALSoundPlayer_TimelineAdditions();
 
-		bool load(string fileName, bool stream = false) override;
+//        bool load(string fileName, bool stream = false) override;
+        bool load(string fileName, bool stream = false); // modified
+
 		void unload() override;
 		void play() override;
 		void stop() override;
