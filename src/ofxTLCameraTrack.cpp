@@ -436,8 +436,12 @@ void ofxTLCameraTrack::setCameraFrameToTime(ofxTLCameraFrame* target, unsigned l
 }
 
 void ofxTLCameraTrack::moveCameraToPosition(ofxTLCameraFrame* target){
-	camera->setPosition(camera->getPosition().getInterpolated(target->position, dampening) );
-	ofQuaternion q;
+	//camera->setPosition(camera->getPosition().getInterpolated(target->position, dampening) );
+    ofVec3f cam_pos = camera->getPosition(); //modified
+    ofVec3f cam_int = cam_pos.getInterpolated(target->position, dampening) ; //modified
+    camera->setPosition(cam_int); //modified
+    camera->setPosition(camera->getPosition()); //modified
+    ofQuaternion q;
 	q.slerp(dampening, camera->getOrientationQuat(), target->orientation);
 	camera->setOrientation(q);
 }
