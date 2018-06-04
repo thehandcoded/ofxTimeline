@@ -31,3 +31,13 @@ External modifications:
         bool     isEnabled; 
           
   Change these two lines from protected to public!
+
+
+- modify audiodecoderaudio.h from ofxAudioDecoder addon:
+    
+        //#ifdef TARGET_OS_IOS
+        //#include <MobileCoreServices/MobileCoreServices.h>
+        //#elif defined TARGET_OS_MAC
+        #if defined TARGET_OS_MAC
+          
+  Comment MobileCoreServices to prevent build error
