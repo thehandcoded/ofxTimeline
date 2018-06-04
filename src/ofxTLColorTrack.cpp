@@ -109,7 +109,9 @@ void ofxTLColorTrack::draw(){
 		else{
 			ofSetColor(s->color.getInverted());
 		}
-		ofLine(c, ofVec2f(screenX, bounds.getMaxY()));
+		//ofLine(c, ofVec2f(screenX, bounds.getMaxY()));
+        ofLine(c, ofPoint(screenX, bounds.getMaxY())); // modified
+
 		ofPopStyle();
 	}
 }
@@ -152,30 +154,44 @@ void ofxTLColorTrack::drawModalContent(){
 		}
 		colorPallete.draw(colorWindow);
 
-		ofVec2f selectionPoint = colorWindow.getMin() + selectedSample->samplePoint * ofVec2f(colorWindow.width,colorWindow.height);
+//        ofVec2f selectionPoint = colorWindow.getMin() + selectedSample->samplePoint * ofVec2f(colorWindow.width,colorWindow.height);
+        
+        ofVec2f selectionPoint = ofVec2f(colorWindow.getMin()) + selectedSample->samplePoint * ofVec2f(colorWindow.width,colorWindow.height); // modified
+        
+        
 		ofSetColor(selectedSample->color.getInverted());
-		ofLine(selectionPoint - ofVec2f(8,0), selectionPoint + ofVec2f(8,0));
-		ofLine(selectionPoint - ofVec2f(0,8), selectionPoint + ofVec2f(0,8));
-
+//        ofLine(selectionPoint - ofVec2f(8,0), selectionPoint + ofVec2f(8,0));
+//        ofLine(selectionPoint - ofVec2f(0,8), selectionPoint + ofVec2f(0,8));
+        ofLine(ofPoint(selectionPoint) - ofVec2f(8,0), ofPoint(selectionPoint) + ofVec2f(8,0)); // modified
+        ofLine(ofPoint(selectionPoint) - ofVec2f(0,8), ofPoint(selectionPoint) + ofVec2f(0,8)); //modified
+        
 		ofPushStyle();
 		ofNoFill();
 		if(previousSample != NULL){
-			ofVec2f previousSamplePoint = colorWindow.getMin() + previousSample->samplePoint * ofVec2f(colorWindow.width,colorWindow.height);
+//            ofVec2f previousSamplePoint = colorWindow.getMin() + previousSample->samplePoint * ofVec2f(colorWindow.width,colorWindow.height);
+            ofVec2f previousSamplePoint = ofVec2f(colorWindow.getMin()) + previousSample->samplePoint * ofVec2f(colorWindow.width,colorWindow.height); // modified
 			ofSetColor(previousSample->color.getInverted(), 150);
-			ofCircle(previousSamplePoint, 3);
-			ofLine(previousSamplePoint,selectionPoint);
+//            ofCircle(previousSamplePoint, 3);
+//            ofLine(previousSamplePoint,selectionPoint);
+            ofCircle(ofPoint(previousSamplePoint), 3); // modified
+            ofLine(ofPoint(previousSamplePoint),ofPoint(selectionPoint)); // modified
 		}
 		if(nextSample != NULL){
-			ofVec2f nextSamplePoint = colorWindow.getMin() + nextSample->samplePoint * ofVec2f(colorWindow.width,colorWindow.height);
+//            ofVec2f nextSamplePoint = colorWindow.getMin() + nextSample->samplePoint * ofVec2f(colorWindow.width,colorWindow.height);
+            ofVec2f nextSamplePoint = ofVec2f(colorWindow.getMin()) + nextSample->samplePoint * ofVec2f(colorWindow.width,colorWindow.height); // modified
 			ofSetColor(nextSample->color.getInverted(), 150);
 
 			//draw a little triangle pointer
 			ofVec2f direction = (nextSamplePoint - selectionPoint).normalized();
 			ofVec2f backStep = nextSamplePoint-direction*5;
-			ofTriangle(nextSamplePoint,
-					   backStep + direction.getRotated(90)*3,
-					   backStep - direction.getRotated(90)*3);
-			ofLine(nextSamplePoint,selectionPoint);
+//            ofTriangle(nextSamplePoint,
+//                       backStep + direction.getRotated(90)*3,
+//                       backStep - direction.getRotated(90)*3);
+//            ofLine(nextSamplePoint,selectionPoint);
+            ofTriangle(ofPoint(nextSamplePoint),
+                       ofPoint(backStep) + direction.getRotated(90)*3,
+                       ofPoint(backStep) - direction.getRotated(90)*3); // modified
+            ofLine(ofPoint(nextSamplePoint),ofPoint(selectionPoint)); // modified
 		}
 		ofPopStyle();
 
