@@ -60,7 +60,8 @@ class ofxTLFlags : public ofxTLBangs {
 	virtual void addFlag(string key);
 	virtual void addFlagAtTime(string key, unsigned long long time);
     virtual ofxTLFlag* getFlagWithKey(string key);
-	
+    vector<ofxTLFlag*> getAllKeyframesAtRange(long rangeStart, long rangeEnd);
+
 protected:
     
     virtual ofxTLKeyframe* newKeyframe();

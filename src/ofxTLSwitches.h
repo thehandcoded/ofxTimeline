@@ -43,6 +43,7 @@ class ofxTLSwitch : public ofxTLKeyframe {
     //	ofRange dragOffsets;
 	bool startSelected;
 	bool endSelected;
+    bool selected;
     long edgeDragOffset;
     ofRectangle display;
     
@@ -62,7 +63,9 @@ class ofxTLSwitches : public ofxTLKeyframes {
     virtual bool isOnAtPercent(float percent);
     
     ofxTLSwitch* getActiveSwitchAtMillis(long millis);
-    
+    vector<ofxTLSwitch*> getAllActiveSwitchAtMillis(long millis);
+    vector<ofxTLSwitch*> getAllSwitchesAtRange(long rangeStart, long rangeEnd);
+
     virtual bool mousePressed(ofMouseEventArgs& args, long millis);
     virtual void mouseDragged(ofMouseEventArgs& args, long millis);
     virtual void mouseReleased(ofMouseEventArgs& args, long millis);
@@ -77,6 +80,8 @@ class ofxTLSwitches : public ofxTLKeyframes {
     
     virtual string getTrackType();
     virtual void pasteSent(string pasteboard);
+    
+    void addKeyframeToTimeline(unsigned long long millis, unsigned long long millis_max, string name, float value=0.);
 	
   protected:
     virtual void update();

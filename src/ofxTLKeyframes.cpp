@@ -834,6 +834,23 @@ void ofxTLKeyframes::deleteKeyframe(ofxTLKeyframe* keyframe){
 	}
 }
 
+void ofxTLKeyframes::deleteAllKeyFrames(){
+    
+    for(int i = keyframes.size() - 1; i >= 0; i--){
+        deselectKeyframe(keyframes[i]);
+        willDeleteKeyframe(keyframes[i]);
+        delete keyframes[i];
+        keyframes.erase(keyframes.begin()+i);
+    }
+    
+    selectedKeyframes.clear();
+    selectedKeyframes.empty();
+    keyframes.clear();
+    keyframes.empty();
+    updateKeyframeSort();
+    timeline->flagTrackModified(this);
+}
+
 ofxTLKeyframe* ofxTLKeyframes::keyframeAtScreenpoint(ofVec2f p){
 	if(!bounds.inside(p)){
 		return NULL;

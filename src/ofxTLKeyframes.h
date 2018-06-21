@@ -120,6 +120,8 @@ class ofxTLKeyframes : public ofxTLTrack
 	void saveToBinaryFile();
 	void loadFromBinaryFile();
 	bool useBinarySave;
+    void deleteAllKeyFrames();
+    void deleteKeyframe(ofxTLKeyframe* keyframe);
 
   protected:
 	virtual ofxTLKeyframe* newKeyframe();
@@ -152,7 +154,6 @@ class ofxTLKeyframes : public ofxTLTrack
 
 	//don't override these in subclasses
 	void deleteSelectedKeyframes();
-	void deleteKeyframe(ofxTLKeyframe* keyframe);
 	//instead implement special behavior here:
 	//this is called before the keyframe is deleted and removed from the keyframes vector
 	virtual void willDeleteKeyframe(ofxTLKeyframe* keyframe){};

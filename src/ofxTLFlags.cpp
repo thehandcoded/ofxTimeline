@@ -264,3 +264,13 @@ ofxTLFlag* ofxTLFlags::getFlagWithKey(string key){
 	return NULL;
 }
 
+vector<ofxTLFlag*> ofxTLFlags::getAllKeyframesAtRange(long rangeStart, long rangeEnd){
+    vector<ofxTLFlag*> vec;
+    for(int i = 0; i < keyframes.size(); i++){
+        ofxTLFlag* flag = (ofxTLFlag*)keyframes[i];
+        if(flag->time >= rangeStart && flag->time<= rangeEnd){
+            vec.push_back(flag);
+        }
+    }
+    return vec;
+}

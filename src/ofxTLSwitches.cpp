@@ -106,6 +106,10 @@ void ofxTLSwitches::draw(){
 
         ofSetLineWidth(2);
         bool keyIsSelected = isKeyframeSelected(switchKey);
+        
+        ////HAND-CODED
+        switchKey->selected = keyIsSelected;
+        
         if(keyIsSelected || switchKey->startSelected){
 	        ofSetColor(timeline->getColors().textColor);
         }
@@ -224,6 +228,37 @@ ofxTLSwitch* ofxTLSwitches::getActiveSwitchAtMillis(long millis){
         }
     }
     return NULL;
+}
+
+vector<ofxTLSwitch*> ofxTLSwitches::getAllActiveSwitchAtMillis(long millis){
+    vector<ofxTLSwitch*> vec;
+    for(int i = 0; i < keyframes.size(); i++){
+        ofxTLSwitch* switchKey = (ofxTLSwitch*)keyframes[i];
+        if(switchKey->timeRange.min > millis){
+            break;
+        }
+        if(switchKey->timeRange.contains(millis)){
+            vec.push_back(switchKey);
+            
+        }
+    }
+    
+    return vec;
+}
+
+vector<ofxTLSwitch*> ofxTLSwitches::getAllSwitchesAtRange(long rangeStart, long rangeEnd){
+    vector<ofxTLSwitch*> vec;
+    for(int i = 0; i < keyframes.size(); i++){
+        ofxTLSwitch* switchKey = (ofxTLSwitch*)keyframes[i];
+        if((switchKey->timeRange.min >= rangeStart && switchKey->timeRange.min<= rangeEnd)
+           || (switchKey->timeRange.max >= rangeStart && switchKey->timeRange.max<= rangeEnd)
+           ||(switchKey->timeRange.min <= rangeStart && switchKey->timeRange.max>= rangeEnd)){
+            vec.push_back(switchKey);
+        }
+        
+    }
+    
+    return vec;
 }
 
 bool ofxTLSwitches::mousePressed(ofMouseEventArgs& args, long millis){
@@ -637,4 +672,22 @@ ofxTLKeyframe* ofxTLSwitches::keyframeAtScreenpoint(ofVec2f p){
 
 string ofxTLSwitches::getTrackType(){
     return "Switches";
+}
+
+void ofxTLSwitches::addKeyframeToTimeline(unsigned long long millis, unsigned long long millis_max, string name, float value){
+    
+    ofxTLSwitch* switchKey = new ofxTLSwitch();
+    setKeyframeTime(switchKey,millis);
+    //selectedKeyframe->value = screenYToValue(args.y);
+    switchKey->value=value;
+    switchKey->timeRange.min=millis;
+    switchKey->timeRange.max=millis_max;
+    switchKey->textField.text=name;
+    keyframes.push_back(switchKey);
+    selectedKeyframes.push_back(switchKey);
+    updateKeyframeSort();
+    timeline->flagTrackModified(this);
+    createNewOnMouseup = false;
+    
+    
 }
